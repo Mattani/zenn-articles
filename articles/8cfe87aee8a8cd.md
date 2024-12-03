@@ -21,6 +21,9 @@ published: true
 
 ![ELvate](/images/ELevateNG.png)
 
+（前提条件）rootアカウントでログインできていること
+以下、プロンプトの#はrootアカウントです。
+
 ## 更改前の情報
 
 OSはCentOS7.8、カーネルのバージョンは以下のとおりです。
@@ -289,7 +292,11 @@ Remediation: [hint] Back up your data before proceeding with the upgrade and fol
 ```
 
 PostgreSQLが検出されたとのこと。リスクファクターは`Medium`ですが、RedmineサーバとしてはPostgreSQLが動かなくなるのは致命的なのでちゃんと対応しないといけない項目です。
-移行のために必要になるとおもわれるので、きちんとDBのバックアップはとっておきましょう。（DBのバックアップ方法は一般的なので、ここでは割愛します）
+移行のために必要になるとおもわれるので、きちんとDBのバックアップはとっておきましょう。（DBのバックアップ方法は[Redmine.JPの記事「データのバックアップ方法」](https://redmine.jp/faq/system_management/backup/)をご参照ください）
+
+:::message alert
+ここでとったDBのバックアップは後で使いますので、必ず取得してください
+:::
 
 [アップグレード後の対応へ移動](#アップグレード後の対応)
 
@@ -739,7 +746,7 @@ epel-release-8-18.el8.noarch
 
 ### postgreSQLの確認
 
-確認した結果、CentOSの環境ではpostgreSQL9.2がインストールされていたところ、RockyLinuxでは10.23になっています。これによりプロセスは起動しようとしてもエラーがでて起動できない状態です。
+確認した結果、CentOSの環境ではpostgreSQL9.2がインストールされていたところ、RockyLinuxでは10.23になっています。これによりプロセスは起動しようとしてもエラーがでて起動できない状態です。これについての対処は後編で実施することにします。
 
 :::details postgreSQLの確認詳細
 
@@ -751,15 +758,7 @@ postgresql-server-10.23-4.module+el8.9.0+1734+74bd286c.x86_64
 ● postgresql.service - PostgreSQL database server
    Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; vendor preset: disabled)
    Active: failed (Result: exit-code) since Sun 2024-11-10 23:02:52 JST; 2h 18min ago
-
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal systemd[1]: Starting PostgreSQL database server...
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal postgresql-check-db-dir[891]: An old version of the database format was>
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal postgresql-check-db-dir[891]: Use 'postgresql-setup --upgrade' to upgra>
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal postgresql-check-db-dir[891]: See /usr/share/doc/postgresql/README.rpm->
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal systemd[1]: postgresql.service: Control process exited, code=exited sta>
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal systemd[1]: postgresql.service: Killing process 898 (postgresql-chec) w>
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal systemd[1]: postgresql.service: Failed with result 'exit-code'.
-Nov 10 23:02:52 ip-172-31-44-172.ap-northeast-1.compute.internal systemd[1]: Failed to start PostgreSQL database server.
+　　・・・
 # systemctl start postgresql
 Job for postgresql.service failed because the control process exited with error code.
 See "systemctl status postgresql.service" and "journalctl -xe" for details.
