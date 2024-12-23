@@ -24,6 +24,7 @@ published: true
 * EPELリポジトリは参照可能な状態になっている
 
 ## 復旧作業
+
 ### アクション(1)　postgreSQL DBのリカバリ
 
 #### 古いDBのディレクトリを退避
@@ -267,6 +268,7 @@ host    redmine         redmine         ::1/128                 md5
 
 これで、マイグレーションを実行してもエラーは発生しなくなりました。
 （実際のマイグレーションによるDB変更はなにも起こりませんでしたが笑）
+
 ```bash
 # RAILS_ENV=production bundle exec rake db:migrate
 #
