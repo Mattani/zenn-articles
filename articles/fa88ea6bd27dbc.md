@@ -1,7 +1,7 @@
 ---
 title: "RedmineでSSOログイン実現するプラグインの比較"
 emoji: "🐡"
-type: tech
+type: "idea" # tech: 技術記事 / idea: アイデア
 topics: [Redmine, プラグイン, SSO]
 published: true
 ---
